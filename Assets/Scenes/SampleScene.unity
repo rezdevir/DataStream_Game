@@ -5556,7 +5556,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6f6b6b5bdc9cc5d4e9f783c96d38c874, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
-  input: {fileID: 0}
+  Distance_Sample: 0.4
+  LinePrefab: {fileID: 7928177512949218680, guid: c518f74319ce3fb4c8890ed544fada89, type: 3}
 --- !u!4 &1774042318
 Transform:
   m_ObjectHideFlags: 0
@@ -5579,6 +5580,6 @@ SceneRoots:
   - {fileID: 519420032}
   - {fileID: 619394802}
   - {fileID: 1506360028}
-  - {fileID: 1774042318}
   - {fileID: 332344434}
+  - {fileID: 1774042318}
   - {fileID: 1246169410}
