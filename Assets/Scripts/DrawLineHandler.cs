@@ -1,5 +1,6 @@
+using System;
 using System.Collections;
-using JetBrains.Annotations;
+
 using UnityEngine;
 
 public class DrawLineHandler : MonoBehaviour
@@ -7,10 +8,14 @@ public class DrawLineHandler : MonoBehaviour
     [SerializeField] float Distance_Sample = 3f;
 
     [SerializeField] GameObject LinePrefab;
+    
     InputHandler input;
     LinePrefabsManager Curren_LineManager;
-   
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+
+    Vector2? LastPos = null;
+
+    // Vector2[4] LasPositions;
+       // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         input = InputHandler.Instance;
@@ -53,6 +58,7 @@ public class DrawLineHandler : MonoBehaviour
     }
     void OnEndLine(PressData data)
     {
+      LastPos = null;  
         IsClick = false;
         Curren_LineManager.AddPosition(input.mouse_position);
     }
@@ -68,23 +74,51 @@ public class DrawLineHandler : MonoBehaviour
             if (Vector2.Distance(input.mouse_position, start_point) >= Distance_Sample)
             {
                 start_point = input.mouse_position;
-
+                LastPos = start_point;
                 Curren_LineManager.AddPosition(start_point);
             }
         }
     }
-    
 
-    void DrawLine()
+
+    public float GetMovementAngle()
     {
+
+        if (LastPos != null)
+
+        {
+            Vector2 tmp = (Vector2)LastPos;
+            float angle = Helper.Dir2Angle(input.mouse_position - tmp);
+            Log.Show(()=>angle);
+            return angle;
+            
+            
+        }
+        else
+        {
+            return float.NaN;
+        }
 
     }
-
-
-    // Update is called once per frame
-    void LateUpdate()
+  void Update()
     {
-      
+        
         GetSample();
     }
+    // void LateUpdate()
+    // {
+    //     if (IsClick)
+    //     {
+    //         LastPos = input.mouse_position;
+    //         Debug.Log("Late:" + LastPos);
+    //     }
+    //     else
+    //     {
+    //         LastPos = null;        }
+     
+    // }
+
+    // Update is called once per frame
+
+  
 }

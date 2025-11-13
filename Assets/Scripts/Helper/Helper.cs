@@ -67,8 +67,16 @@ static public class Helper
     }
     static public float Dir2Angle(Vector2 direction)
     {
+        // if (direction == null) return 0;   
         var angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
-        return angle;
+        return In360(angle);
+    }
+    static public float In360(float angle)
+    {
+        if (angle >= 0 && angle <= 180)
+            return angle;
+        
+        return 360 - Mathf.Abs(angle);
     }
 
     /// <summary>
