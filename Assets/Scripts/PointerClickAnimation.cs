@@ -18,23 +18,14 @@ public class PointerClickAnimation : MonoBehaviour
         input = InputHandler.Instance;
         input.OnClickHandler += Click;
     }
-
+    bool IsPressedState = false;
     void Click(PressData data)
     {
-        // Debug.Log(data.IsPressed);
-        if (data.IsPressed)
-        {
-            GoShrink();
-        }
-            
-        else {GoNormal();}
-            
+      IsPressedState=  data.IsPressed ;         
     }
     bool Flag_Normal = true;
     void GoShrink()
     {
-        // Debug.Log("Shrink");
-
         if (Flag_Normal)
         {
             Peffect.Play();
@@ -64,6 +55,8 @@ public class PointerClickAnimation : MonoBehaviour
 
     void Update()
     {
-        transform.position = input.mouse_position;
+        if (input.mouse_position != null) transform.position = input.mouse_position;
+        if(IsPressedState) 
+          {GoShrink(); } else {GoNormal();}
     }
 }

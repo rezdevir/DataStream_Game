@@ -1,3 +1,4 @@
+using System.Collections;
 using JetBrains.Annotations;
 using UnityEngine;
 
@@ -8,16 +9,21 @@ public class DrawLineHandler : MonoBehaviour
     [SerializeField] GameObject LinePrefab;
     InputHandler input;
     LinePrefabsManager Curren_LineManager;
+   
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         input = InputHandler.Instance;
+        StartCoroutine(StartAfterDelay());
+    }
+    IEnumerator StartAfterDelay()
+    {
+        yield return new WaitForSeconds(0.1f);
         input.OnClickHandler += ClickHandler;
     }
 
-
     Vector2 start_point;
-    Vector2 threshold_point;
+    // Vector2 threshold_point;
 
 
     GameObject currecnt_line;
@@ -40,6 +46,7 @@ public class DrawLineHandler : MonoBehaviour
         currecnt_line = Instantiate(LinePrefab, transform);
         Curren_LineManager = currecnt_line.GetComponent<LinePrefabsManager>();
         start_point = data.Position;
+        Debug.Log(start_point);
         Curren_LineManager.AddPosition(start_point);
         // At frist asume click point is start point
         
@@ -55,7 +62,7 @@ public class DrawLineHandler : MonoBehaviour
     {
         if (Curren_LineManager && IsClick)
         {
-            
+
             Curren_LineManager.PressDragLine(input.mouse_position);
             // input.mouse_position
             if (Vector2.Distance(input.mouse_position, start_point) >= Distance_Sample)
@@ -66,6 +73,8 @@ public class DrawLineHandler : MonoBehaviour
             }
         }
     }
+    
+
     void DrawLine()
     {
 

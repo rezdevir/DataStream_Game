@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -10,13 +11,13 @@ public class InputHandler : MonoBehaviour
 
     Camera cam;
     InputSystem_Actions input;
-
+    // Timer timer = new Timer();
     [HideInInspector] public Vector2 mouse_position = Vector2.zero;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Awake()
     {
-       
-        if (Instance == this && Instance !=null)
+
+        if (Instance == this && Instance != null)
         {
             Destroy(this);
         }
@@ -25,17 +26,20 @@ public class InputHandler : MonoBehaviour
             Instance = this;
         }
     }
+
+
+
     void Start()
     {
         input = new InputSystem_Actions();
         input.Handler.Click.performed += Press;
         input.Handler.Release.performed += Release;
-        
         cam = Camera.main;
         input.Enable();
     }
     void Press(InputAction.CallbackContext e)
     {
+      
         Vector2 val = input.Handler.point.ReadValue<Vector2>();
         PressData data = new PressData
         {

@@ -6,11 +6,9 @@ using UnityEngine.Rendering;
 public class LinePrefabsManager : MonoBehaviour
 {
 
-    public List<Vector3> points;
+    public List<Vector3> points=new List<Vector3>();
 
     [ColorUsage(true,true)] public Color color;
-
-    // [SerializeField] private GameObject OnEndshapePrefabs;
     public float width = 0.2f;
     LineRenderer lineRenderer;
 
@@ -19,71 +17,38 @@ public class LinePrefabsManager : MonoBehaviour
     {
 
         lineRenderer = GetComponent<LineRenderer>();
+        points.Clear();
+        lineRenderer.positionCount = 0;
         lineRenderer.enabled = false;
         lineRenderer.startWidth = width;
         lineRenderer.endWidth = width;
         lineRenderer.startColor = color;
         lineRenderer.endColor = color;
 
-
-
-
-
     }
 
-    
-    // Update is called once per frame
-    void Update()
-    {
-        // UpdateLine();
-    }
+
 
     bool Flag_First = true;
-    public void UpdateLine()
-    {
-        Vector3[] positions = points.ToArray();
 
-        lineRenderer.positionCount = positions.Length;
-        lineRenderer.SetPositions(positions);
-        // foreach (var p in points)
-        // {
-        //     lineRenderer.SetPositions(positions);
-        // }
-    }
 
-    public void AddPositions(Vector2 position)
-    {
-
-        points.Add(position);
-        Vector3[] positions = points.ToArray();
-        lineRenderer.positionCount = positions.Length;
-        lineRenderer.SetPositions(positions);
-
-        if (Flag_First)
-            lineRenderer.enabled = true;
-        Flag_First = false;
-    }
-    
        public void AddPosition(Vector2 position)
     {
 
         points.Add(position);
-        // Vector3[] positions = points.ToArray();
-        int last_count = lineRenderer.positionCount;
-        lineRenderer.positionCount = last_count+1;
-        lineRenderer.SetPosition(last_count,position);
-
+        int last_count = points.Count;
+        lineRenderer.positionCount = last_count;
+        lineRenderer.SetPosition(last_count-1,position);
         if (Flag_First)
+        {
             lineRenderer.enabled = true;
-        Flag_First = false;
+            Flag_First = false;
+        }
+
+
     }
 
-    public void AddPosition_Updata(Vector2 position)
-    {
-        
-        AddPosition(position);
-        UpdateLine();
-    }
+ 
 
     public void PressDragLine(Vector2 position)
     {
@@ -97,7 +62,7 @@ public class LinePrefabsManager : MonoBehaviour
        public void ReleaseDragLine(Vector2 position)
     {
         lineRenderer.positionCount = lineRenderer.positionCount - 1;
-        AddPosition_Updata(position);
-        // lineRenderer.SetPosition(lineRenderer.positionCount-1,position);
+        AddPosition(position);
+
     }
 }
