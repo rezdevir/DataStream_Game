@@ -46,7 +46,7 @@ public class DrawLineHandler : MonoBehaviour
         currecnt_line = Instantiate(LinePrefab, transform);
         Curren_LineManager = currecnt_line.GetComponent<LinePrefabsManager>();
         start_point = data.Position;
-        Debug.Log(start_point);
+        
         Curren_LineManager.AddPosition(start_point);
         // At frist asume click point is start point
         
@@ -54,7 +54,7 @@ public class DrawLineHandler : MonoBehaviour
     void OnEndLine(PressData data)
     {
         IsClick = false;
-        Curren_LineManager.ReleaseDragLine(input.mouse_position);
+        Curren_LineManager.AddPosition(input.mouse_position);
     }
 
 
@@ -82,7 +82,7 @@ public class DrawLineHandler : MonoBehaviour
 
 
     // Update is called once per frame
-    void Update()
+    void LateUpdate()
     {
       
         GetSample();

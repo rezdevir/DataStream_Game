@@ -59,10 +59,4 @@ public class LinePrefabsManager : MonoBehaviour
 
     }
     
-       public void ReleaseDragLine(Vector2 position)
-    {
-        lineRenderer.positionCount = lineRenderer.positionCount - 1;
-        AddPosition(position);
-
-    }
 }
